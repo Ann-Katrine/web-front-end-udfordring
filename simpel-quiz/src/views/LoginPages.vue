@@ -31,10 +31,9 @@ export default Vue.extend({
         
         this.$store.dispatch("setSessionToken")
         .then(value => {
-          console.log("Du er logget ind")
+          this.$router.push("/quiz")
         })
 
-        this.$router.push("/quiz")
       }
     }
   }
