@@ -49,14 +49,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
+import { quizQuestions, quizRequest } from 'src/interface/QuizRequest'
 
 export default Vue.extend({
     name: 'Quiz',
     data(){
         return{
             api: "https://opentdb.com/api.php",
-            test: "easy",
-            quiz: []
+            difficulty: "easy",
+            quiz: [] as quizQuestions[]
         }
     },
     created(){
@@ -65,11 +66,11 @@ export default Vue.extend({
     methods:{
         getQuiz(){
             axios
-                .get(this.api + "?amount=10&category=27&difficulty=" + this.test /*+"&encode=base64"*/)
+                .get<quizRequest>(this.api + "?amount=10&category=27&difficulty=" + this.difficulty + "&token=5eacead0d4762c454218fdbd72035ae618d99b5fec4e8eff94d290c96ebcf47d")
                 .then(Response => {
-                    this.quiz = Response.data
+                    this.quiz = Response.data.results
                     console.log(this.quiz)
-                    console.log()
+                    console.log(this.quiz[1].correct_answer)
                 })
         },
         nextQuestion(){

@@ -19,12 +19,21 @@ export default Vue.extend({
   data(){
     return{
       email: "",
-      password: ""
+      password: "",
+      dummy: ""
     }
   },
   methods:{
     login(){
+      let token = "";
+
       if(this.email == "hej@" && this.password == '123'){
+        
+        this.$store.dispatch("setSessionToken")
+        .then(value => {
+          console.log("Du er logget ind")
+        })
+
         this.$router.push("/quiz")
       }
     }
