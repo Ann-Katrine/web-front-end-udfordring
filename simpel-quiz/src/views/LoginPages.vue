@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <h1>Login</h1>
-    <div>
-      <label>Email: </label><input type="email" v-model="email"/>
+  <div class="outerbox">
+    <div class="innerBox">
+      <h1>Login</h1>
+      <div class="inputAndButtonOuterBox">
+        <div>
+          <label class="email">Email: </label><input type="email" v-model="email" class="input"/>
+        </div>
+        <div>
+          <label>Password: </label><input type="password" v-model="password" class="input"/>
+        </div>
+        <button class="button" @click="login()">Login</button>
+
+      </div>
     </div>
-    <div>
-      <label>Password</label><input type="password" v-model="password"/>
-    </div>
-    <button @click="login()">Login</button>
   </div>
 </template>
 
@@ -25,15 +30,57 @@ export default Vue.extend({
   },
   methods:{
     login(){
-      if(this.email == "hej@" && this.password == '123'){
-        
-        this.$store.dispatch("setSessionToken")
-        .then(value => {
-          this.$router.push("/quiz")
-        })
-
-      }
+      this.$store.dispatch("setSessionToken")
+      .then(value => {
+        this.$router.push("/quiz")
+      })
     }
   }
 });
 </script>
+
+<style>
+  .outerbox{
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .innerBox{
+    background-color: #B8E6E6;
+    padding: 1em 3em 2.5em 3em;
+    border-radius: 1.5em;
+    margin-bottom: 8em;
+  }
+
+  .inputAndButtonOuterBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .inputOuterBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .email{
+    padding-right: 1.9em;
+  }
+
+  .input{
+    width: 19em;
+  }
+
+  .button{
+    margin: 1em 0em 1em 1em;
+    padding: 0.5em 2em 0.5em 2em;
+  }
+</style>
