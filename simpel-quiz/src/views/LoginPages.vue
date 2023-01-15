@@ -25,8 +25,6 @@ export default Vue.extend({
   },
   methods:{
     login(){
-      let token = "";
-
       if(this.email == "hej@" && this.password == '123'){
         
         this.$store.dispatch("setSessionToken")

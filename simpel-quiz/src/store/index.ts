@@ -44,13 +44,10 @@ export default new Vuex.Store({
         })
     },
     setTheQuizDifficulty(state, difficulty){
-      console.log("her1")
-      console.log(difficulty)
       axios
         .get<quizRequest>(this.state.api + "?amount=10&category=27&difficulty=" + difficulty.difficulty + "&token=" + this.state.sessionToken)
         .then(Response => {
             this.state.tempQuiz = Response.data.results
-            console.log(Response.data)
             console.log(this.state.tempQuiz)
         })
     }

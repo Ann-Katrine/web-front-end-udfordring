@@ -17,17 +17,36 @@
                 </li>
             </ul>
         </nav>
-        <div>
+        <div v-if="quizAnswer.length < 10">
             <h2 v-html="getApiQuiz[number].question"></h2>
+            <p>Kun vælge et svar</p>
             <div>
                 <div>
-                    <input type="checkbox"/><label v-html="getApiQuiz[number].correct_answer"></label>
+                    <input v-model="ischeked" :value="getApiQuiz[number].correct_answer" type="checkbox"/><label v-html="getApiQuiz[number].correct_answer"></label>
                 </div>
                 <div v-for="(quiz, index) in getApiQuiz[number].incorrect_answers" :key="index">
-                    <input type="checkbox"/><label v-html="quiz"></label>
+                    <input v-model="ischeked" :value="quiz"  type="checkbox"/><label v-html="quiz"></label>
                 </div>
             </div>
-            <button @click="nextQuestion()">Næste Spørgsmål</button>
+            <button v-if="quizAnswer.length < 8" @click="nextQuestion()">Næste Spørgsmål</button>
+            <button v-else @click="nextQuestion()">Hvis svarende</button>
+        </div>
+        <div v-else>
+            <div  v-for="(quizAnwsers, id) in getApiQuiz" :key="id">
+                <h2 v-html="getApiQuiz[id].question"></h2>
+                <div>
+                    <div>
+                        <input :value="getApiQuiz[id].correct_answer" :checked="getApiQuiz[id].correct_answer == quizAnswer[id]" type="checkbox"/>
+                        <label v-if="getApiQuiz[id].correct_answer == quizAnswer[id]" v-html="getApiQuiz[id].correct_answer + '   :your answer'" class="green"></label>
+                        <label v-else v-html="getApiQuiz[id].correct_answer + '  :The correct answer'"></label>
+                    </div>
+                    <div v-for="(quiz, index) in getApiQuiz[id].incorrect_answers" :key="index">
+                        <input :value="quiz" :checked="quiz == quizAnswer[id]"  type="checkbox"/>
+                        <label v-if="quiz == quizAnswer[id]" v-html="quiz + '   :your answer'" class="red"></label>
+                        <label v-else v-html="quiz"></label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -40,7 +59,9 @@ export default Vue.extend({
     name: 'Quiz',
     data(){
         return{
-            number: 0
+            number: 0,
+            ischeked: [],
+            quizAnswer: []
         }
     },
     created(){
@@ -54,7 +75,11 @@ export default Vue.extend({
             this.$store.dispatch("setQuiz")
         },
         nextQuestion(){
-            if(this.number != 9){
+            let AnswerCount = 0;
+
+            if(this.number < 10){
+                this.quizAnswer.push(this.ischeked[0])
+                this.ischeked = []
                 this.number++;
             }
         },
@@ -70,3 +95,13 @@ export default Vue.extend({
     }   
 })
 </script>
+
+<style>
+    .green{
+        color: #33cc33;
+    }
+
+    .red{
+        color: #ff0000;
+    }
+</style>
