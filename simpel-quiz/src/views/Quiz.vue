@@ -1,26 +1,28 @@
 <template>
     <div>
-        <h1>Animals Quiz</h1>
-        <nav>
-            <ul>
-                <li>
-                    <button @click="setDifficulty('easy')">Easy</button>
-                </li>
-                <li>
-                    <button @click="setDifficulty('medium')">Medium</button>
-                </li>
-                <li>
-                    <button @click="setDifficulty('hard')">Hard</button>
-                </li>
-                <li>
-                    <button @click="logout()">Log ud</button>
-                </li>
-            </ul>
-        </nav>
-        <div v-if="quizAnswer.length < 10">
+        <div class="headerBox">
+            <h1 class="header">Animals Quiz</h1>
+            <nav>
+                <ul class="nav">
+                    <li>
+                        <button class="navbutton" @click="setDifficulty('easy')">Easy</button>
+                    </li>
+                    <li>
+                        <button class="navbutton" @click="setDifficulty('medium')">Medium</button>
+                    </li>
+                    <li>
+                        <button class="navbutton" @click="setDifficulty('hard')">Hard</button>
+                    </li>
+                    <li>
+                        <button class="navbutton" @click="logout()">Log ud</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-if="quizAnswer.length < 10" class="bodyOuterbox">
             <h2 v-html="getApiQuiz[number].question"></h2>
             <p>Kun vælge et svar</p>
-            <div>
+            <div class="answerOuterBox">
                 <div>
                     <input v-model="ischeked" :value="getApiQuiz[number].correct_answer" type="checkbox"/><label v-html="getApiQuiz[number].correct_answer"></label>
                 </div>
@@ -31,7 +33,7 @@
             <button v-if="quizAnswer.length < 8" @click="nextQuestion()">Næste Spørgsmål</button>
             <button v-else @click="nextQuestion()">Hvis svarende</button>
         </div>
-        <div v-else>
+        <div v-else class="bodyOuterbox">
             <div  v-for="(quizAnwsers, id) in getApiQuiz" :key="id">
                 <h2 v-html="getApiQuiz[id].question"></h2>
                 <div>
@@ -97,6 +99,57 @@ export default Vue.extend({
 </script>
 
 <style>
+    .headerBox{
+        position: fixed;
+        top: 0;
+        width: 100%;
+	    z-index: 1;
+        background-color: #fff;
+    }
+
+    .bodyOuterbox{
+        margin-top: 10em;
+    }
+
+    .header{
+        font-size: 2em;
+        margin: 0.5em 0;
+    }
+
+    nav{
+        
+        padding: 0 0 0.5em 0;
+    }
+
+    ul{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    li{
+        padding: 0 1em;
+    }
+
+    .navbutton{
+        margin: 1em 0em 1em 1em;
+        padding: 0.5em 2em 0.5em 2em;
+    }
+
+    h2{
+        font-size: 1.5em;
+        margin: 1em 0 0.5em 0;
+    }
+
+    .answerOuterBox{
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        
+        margin: 0.5em 0 0.5em 0;
+    }
+
     .green{
         color: #33cc33;
     }

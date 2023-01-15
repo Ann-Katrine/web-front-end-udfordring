@@ -1,9 +1,9 @@
 <template>
   <div class="outerbox">
     <div class="innerBox">
-      <h1>Login</h1>
+      <h1 class="header">Login</h1>
       <div class="inputAndButtonOuterBox">
-        <div>
+        <div class="inputSpace">
           <label class="email">Email: </label><input type="email" v-model="email" class="input"/>
         </div>
         <div>
@@ -53,9 +53,14 @@ export default Vue.extend({
 
   .innerBox{
     background-color: #B8E6E6;
-    padding: 1em 3em 2.5em 3em;
+    padding: 1em 3em 1em 3em;
     border-radius: 1.5em;
     margin-bottom: 8em;
+  }
+
+  .header{
+    font-size: 2em;
+    margin-bottom: 0.5em;
   }
 
   .inputAndButtonOuterBox{
@@ -69,6 +74,10 @@ export default Vue.extend({
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+  }
+
+  .inputSpace{
+    margin-bottom: 0.5em;
   }
 
   .email{
